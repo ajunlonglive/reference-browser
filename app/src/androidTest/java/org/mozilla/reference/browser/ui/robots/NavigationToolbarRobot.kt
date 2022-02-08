@@ -24,6 +24,7 @@ import org.mozilla.reference.browser.R
 import org.mozilla.reference.browser.ext.waitAndInteract
 import org.mozilla.reference.browser.helpers.TestAssetHelper.waitingTime
 import org.mozilla.reference.browser.helpers.TestHelper.packageName
+import org.mozilla.reference.browser.helpers.TestHelper.waitForObjects
 import org.mozilla.reference.browser.helpers.click
 
 /**
@@ -57,8 +58,12 @@ class NavigationToolbarRobot {
             mDevice.findObject(UiSelector()
                 .resourceId("$packageName:id/mozac_browser_toolbar_menu"))
                 .waitForExists(waitingTime)
+
             threeDotMenuButton().click()
 
+            mDevice.waitForObjects(
+                mDevice.findObject(UiSelector().resourceId("$packageName:id/mozac_browser_menu_recyclerView"))
+            )
             ThreeDotMenuRobot().interact()
             return ThreeDotMenuRobot.Transition()
         }
